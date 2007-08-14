@@ -1,0 +1,13 @@
+Source: mp3unicode
+Priority: extra
+Maintainer: Alon Bar-Lev <alon.barlev@gmail.com>
+Build-Depends: cdbs (>= 0.4.27-1), debhelper (>= 5), autotools-dev, libtag1-dev
+Standards-Version: 3.7.2
+Section: sound
+
+Package: mp3unicode
+Section: sound
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description:  Convert MP3 tags into unicode
+ Allow converting MP3 tags into unicode.

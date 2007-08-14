@@ -1,0 +1,40 @@
+mp3unicode -- Convert MP3 tags to Unicode.
+
+Copyright (c) 2006-2007 Alon Bar-Lev <alon.barlev@gmail.com>
+Copyright (C) 2006 Andrey Dubovik
+
+POSIX
+	Dependencies:
+		taglib>=1.4
+
+	Build:
+		$ ./configure
+		$ make
+		$ make install
+
+Cross-MinGW32
+	Dependencies:
+		taglib>=1.4
+		libiconv>=1.11
+		man2html
+
+	Build:
+		w32root=/tmp/w32root
+
+		./configure \
+			--host=mingw32
+			PKG_CONFIG=true \
+			TAGLIB_CFLAGS="-I${w32root}/include/taglib" \
+			TAGLIB_LIBS="-L${w32root}/lib -ltag" \
+			ICONV_CFLAGS="-I${w32root}/include" \
+			ICONV_LIBS="-L${w32root}/lib -liconv.dll"
+		make
+		make install DESTDIR=${w32root}
+
+Native-Cygwin
+	Dependencies:
+		Same as Cross-MinGW32
+
+	Build:
+		Same as Cross-MinGW32, replace --host=mingw32 with --with-cygwin-native.
+
