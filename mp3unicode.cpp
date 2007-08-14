@@ -1,0 +1,344 @@
+/*
+	Copyright (c) 2006-2007 Alon Bar-Lev <alon.barlev@gmail.com>
+	Copyright (C) 2006 Andrey Dubovik
+	All rights reserved.
+
+	This program is free software; you can redistribute it and/or modify
+	it under the terms of the GNU General Public License version 2
+	as published by the Free Software Foundation.
+
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
+
+	You should have received a copy of the GNU General Public License
+	along with this program (see the file COPYING.GPL included with this
+	distribution); if not, write to the Free Software Foundation, Inc.,
+	59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*/
+
+#include "config.h"
+#include <stdio.h>
+#include <getopt.h>
+#include <fileref.h>
+#include <mpegfile.h>
+#include <tag.h>
+#include <id3v1tag.h>
+#include <id3v2tag.h>
+#include <iconv.h>
+#include <errno.h>
+
+class Converter {
+
+protected:
+	bool m_id3v1;
+	bool m_id3v2;
+	bool m_src_utf8;
+	bool m_id3v2_utf8;
+	iconv_t m_cd_src;
+	iconv_t m_cd_id3v1;
+	iconv_t m_cd_id3v2;
+	TagLib::ID3v1::Tag *m_id3v1_tag;
+	TagLib::ID3v2::Tag *m_id3v2_tag;
+	bool m_preserve;
+
+public:
+	Converter (
+		const std::string &src_enc,
+		const std::string &id3v1_enc,
+		const std::string &id3v2_enc,
+		TagLib::ID3v1::Tag *id3v1_tag,
+		TagLib::ID3v2::Tag *id3v2_tag,
+		bool preserve
+	) {
+		m_id3v1 = false;
+		m_id3v2 = false;
+		m_src_utf8 = false;
+		m_id3v2_utf8 = false;
+		m_cd_src = (iconv_t)-1;
+		m_cd_id3v1 = (iconv_t)-1;
+		m_cd_id3v2 = (iconv_t)-1;
+		std::string _src_enc = src_enc;
+		std::string _id3v2_enc = id3v2_enc;
+
+		m_id3v1_tag = id3v1_tag;
+		m_id3v2_tag = id3v2_tag;
+		m_preserve = preserve;
+
+		if (_src_enc == "unicode") {
+			m_src_utf8 = true;
+			_src_enc = "UTF-8";
+		}
+		if ((m_cd_src = iconv_open ("UTF-8", _src_enc.c_str ())) == (iconv_t)-1) {
+			throw std::string("Cannot open source encoding.");
+		}
+		
+		if(id3v1_enc != "none") {
+			if ((m_cd_id3v1 = iconv_open (id3v1_enc.c_str (), "UTF-8")) == (iconv_t)-1) {
+				throw std::string("Cannot open id3v1 encoding.");
+			}
+			m_id3v1 = true;	
+		}
+		if(_id3v2_enc != "none") {
+			if (_id3v2_enc == "unicode") {
+				_id3v2_enc = "UTF-8";
+				m_id3v2_utf8 = true;
+			}
+
+			if ((m_cd_id3v2 = iconv_open (_id3v2_enc.c_str (), "UTF-8")) == (iconv_t)-1) {
+				throw std::string("Cannot open id3v2 encoding.");
+			}
+
+			m_id3v2 = true;
+		}
+	}
+
+
+	~Converter () {
+		if (m_cd_src != (iconv_t)-1) {
+			iconv_close (m_cd_src);
+		}
+		if (m_cd_id3v1 != (iconv_t)-1) {
+			iconv_close (m_cd_id3v1);
+		}
+		if (m_cd_id3v2 != (iconv_t)-1) {
+			iconv_close (m_cd_id3v2);
+		}
+	}
+
+	int
+	Tags() {
+		return (
+			(m_id3v1 ? TagLib::MPEG::File::ID3v1 : 0) |
+			(m_id3v2 ? TagLib::MPEG::File::ID3v2 : 0)
+		);
+	}
+
+	void
+	Convert (
+		const TagLib::String &value,
+		void (TagLib::Tag::*field)(const TagLib::String &)
+	) {
+		std::string str;
+		if (!m_src_utf8 && m_preserve) {
+			if (heuristicIsUnicode (value)) {
+				str = value.to8Bit (true);
+			}
+			else {
+				str = ConvertString (m_cd_src, value.to8Bit (false));
+			}
+		}
+		else {
+			str = ConvertString (m_cd_src, value.to8Bit (m_src_utf8));
+		}
+
+		if (m_id3v1) {
+			(m_id3v1_tag->*field) (TagLib::String (ConvertString (m_cd_id3v1, str)));
+		}
+
+		if (m_id3v2) {
+			(m_id3v2_tag->*field) (
+				TagLib::String (
+					ConvertString (m_cd_id3v2, str),
+					m_id3v2_utf8 ? TagLib::String::UTF8 : TagLib::String::Latin1
+				)
+			);
+		}
+	}
+
+protected:
+
+	bool
+	heuristicIsUnicode (TagLib::String string) {
+		unsigned u0080 = 0;
+		for(TagLib::uint i = 0; i < string.size(); i++) {
+			if(string[i] > 255) {
+				return true;
+			}
+			if(string[i] > 127) {
+				u0080++;
+			}
+		}
+		if(u0080 * 2 <= string.size()) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	std::string
+	ConvertString (
+		iconv_t cd,
+		std::string src
+	) {
+		const char *from;
+		size_t from_size;
+		char to_buffer[1024];
+		char *to;
+		size_t to_size;
+
+		std::string dst;
+
+		from = &*src.begin ();
+		from_size = src.size ();
+		while (from_size > 0) {
+			to = to_buffer;
+			to_size = sizeof (to_buffer);	 
+			if (
+				iconv (
+					cd,
+#if !defined(_LIBICONV_VERSION) || _LIBICONV_VERSION < 0x010B
+					(char **)
+#endif
+					&from,
+					&from_size,
+					&to,
+					&to_size
+				) == (size_t)-1 &&
+				errno != E2BIG
+			) {
+				throw std::string("Error during encoding.");
+			}
+
+			dst.append (to_buffer, to);
+		}
+
+		to = to_buffer;
+		to_size = sizeof (to_buffer);
+		if (iconv (cd, NULL, NULL, &to, &to_size) == (size_t)-1) {
+			throw std::string("Error during encoding.");
+		}
+
+		dst.append (to_buffer, to);
+
+		return dst;
+	}
+};
+
+int main (int argc, char *argv[]) {
+	try {
+		static struct option long_options[] = {
+			{ "source-encoding", required_argument, NULL, 's' },
+			{ "id3v1-encoding", required_argument, NULL, '1' },
+			{ "id3v2-encoding", required_argument, NULL, '3' },
+			{ "preserve-unicode", no_argument, NULL, 'p' },
+			{ "version", no_argument, NULL, 'v' },
+			{ "help", no_argument, NULL, 'h' },
+			{ NULL, 0, NULL, 0 }
+		};
+		int long_options_ret;
+		std::string source_encoding;
+		std::string id3v1_encoding = "none";
+		std::string id3v2_encoding = "none";
+		bool preserve_unicode = false;
+		bool usage_ok = true;
+
+		while (
+			(long_options_ret = getopt_long (argc, argv, "", long_options, NULL)) != -1
+		) {
+			switch (long_options_ret) {
+				case 's':
+					source_encoding = optarg;
+				break;
+				case '1':
+					id3v1_encoding = optarg;
+				break;
+				case '3':
+					id3v2_encoding = optarg;
+				break;
+				case 'p':
+					preserve_unicode = true;
+				break;
+				case 'v':
+					printf (
+						(
+							"%s %s\n"
+							"\n"
+							"Copyright (c) 2006-2007 Alon Bar-Lev <alon.barlev@gmail.com>\n"
+							"Copyright (C) 2006 Andrey Dubovik\n"
+							"This is free software; see the source for copying conditions.\n"
+							"There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n"
+						),
+						PACKAGE,
+						PACKAGE_VERSION
+					);
+					exit (1);
+				break;
+				default:
+				case 'h':
+					usage_ok = false;
+				break;
+			}
+		}
+
+		if (source_encoding.empty ()) {
+			fprintf (
+				stderr,
+				"Please specify source encoding.\n"
+			);
+			exit (1);
+		}
+
+		if (!usage_ok) {
+			fprintf (
+				stderr,
+				(
+					"usage:\n"
+					"%s\n"
+					" -h        --help                        This help\n"
+					" -v        --version                     Version information\n"
+					" -s        --source-encoding             Current encoding, required.\n"
+					" -1        --id3v1-encoding              Target encoding, can be 'none' or ANSI_Code_Page\n"
+					" -3        --id3v2-encoding              Target encoding, can be 'none', ANSI_Code_Page or 'unicode'\n"
+					" -p        --preserve-unicode            Try not to reencode unicode.\n"
+					" file...\n"
+					"\n"
+					"To view available encodings, execute:\n"
+					"$ iconv --list\n"
+					"Specify 'unicode' and not specific unicode code page.\n"
+					"\n"
+				)
+			);
+			exit (1);
+		}
+
+		TagLib::ID3v2::FrameFactory::instance()->setDefaultTextEncoding (TagLib::String::UTF8);
+
+		for (int i=optind;i<argc;i++) {
+			TagLib::MPEG::File mp3file(argv[i]);
+
+			if (!mp3file.isOpen ()) {
+				throw std::string ("Cannot open file: ").append (argv[i]).append (".");
+			}
+
+			TagLib::Tag *tag = mp3file.tag();
+
+			Converter converter (
+				source_encoding,
+				id3v1_encoding,
+				id3v2_encoding,
+				mp3file.ID3v1Tag (true),
+				mp3file.ID3v2Tag (true),
+				preserve_unicode
+			);
+
+			converter.Convert (tag->title (), &TagLib::Tag::setTitle);
+			converter.Convert (tag->artist (), &TagLib::Tag::setArtist);
+			converter.Convert (tag->album (), &TagLib::Tag::setAlbum);
+			converter.Convert (tag->comment (), &TagLib::Tag::setComment);
+			converter.Convert (tag->genre (), &TagLib::Tag::setGenre);
+
+			mp3file.save (converter.Tags ());
+		}
+
+		exit (0);
+	}
+	catch (const std::string &e) {
+		printf ("Error: %s\n", e.c_str ());
+		exit (1);
+	}
+
+	return 1;
+}

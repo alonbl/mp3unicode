@@ -1,0 +1,10 @@
+mp3unicode for Debian
+------------------------
+
+To build mp3unicode follow these steps
+
+1) unpack the tarball
+2) cd mp3unicode-<version>
+3) ln -s distro/debian 
+4) invoke your build tool, e.g. 
+    dpkg-buildpackage -rfakeroot
