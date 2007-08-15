@@ -1,27 +1,28 @@
-2007.07.28 - Alon Bar-Lev <alon.barlev@gmail.com>
-	Drop Qt.
-	Release 1.2
+mp3unicode
+Copyright (c) 2006-2007 Alon Bar-Lev <alon.barlev@gmail.com>
+Copyright (C) 2006 Andrey Dubovik
 
-2007.06.30 - Alon Bar-Lev <alon.barlev@gmail.com>
-	Use qmake to build.
-	Fix some compiler warnings.
-	Added some experimental distro packaging related stuff.
-	Release 1.1.2
+$Id$
 
-2007.04.09 - Alon Bar-Lev <alon.barlev@gmail.com>
-	Qt-4.2 prerequisite and not 4.2.2.
-	UTF-8 filenames are now supported.
-	Release 1.1.1
+2007-??-?? -- Version 1.2
+* Drop Qt.
 
-2007.04.07 - Alon Bar-Lev <alon.barlev@gmail.com>
-	Qt-4.2 migration.
-	Added autoconf/automake build.
-	Auto detect all available codepages.
-	Print available codepages in usage.
-	Added genre encoding.
-	Fixup exit code.
-	Release 1.1.0
+2007-06-30 -- Version 1.1.2
+* Use qmake to build.
+* Fix some compiler warnings.
+* Added some experimental distro packaging related stuff.
 
-2006.07.05 - Andrey Dubovik <andu@mp3unicode.yellowsite.ru>
-	Release 1.0.1
+2007-04-29 -- Version 1.1.1
+* Qt-4.2 prerequisite and not 4.2.2.
+* UTF-8 filenames are now supported.
+
+2007-04-07 -- Version 1.1.0
+* Qt-4.2 migration.
+* Added autoconf/automake build.
+* Auto detect all available codepages.
+* Print available codepages in usage.
+* Added genre encoding.
+* Fixup exit code.
+
+2007-04-07 -- Version 1.0.1
 
