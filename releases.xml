@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<releases>
+  <release>
+    <version>1.2</version>
+    <date>2007-??-??</date>
+    <file type="source">test.tar.gz</file>
+    <file type="ebuild">test.ebuild</file>
+    <file type="debian" arch="x86">test.deb</file>
+    <changes>
+      <change>Drop Qt.</change>
+    </changes>
+  </release>
+  
+  <release>
+    <version>1.1.2</version>
+    <date>2007-06-30</date>
+    <changes>
+      <change>Use qmake to build.</change>
+      <change>Fix some compiler warnings.</change>
+      <change>Added some experimental distro packaging related stuff.</change>
+    </changes>
+  </release>
+  
+  <release stable="true">
+    <version>1.1.1</version>
+    <date>2007-04-29</date>
+    <file type="source">http://mp3unicode.yellowsite.ru/mp3unicode-1.1.1.tar.bz2</file>
+    <changes>
+      <change>Qt-4.2 prerequisite and not 4.2.2.</change>
+      <change>UTF-8 filenames are now supported.</change>
+    </changes>
+  </release>
+  
+  <release stable="true">
+    <version>1.1.0</version>
+    <date>2007-04-07</date>
+    <file type="source">http://mp3unicode.yellowsite.ru/mp3unicode-1.1.0.tar.bz2</file>
+    <changes>
+      <change>Qt-4.2 migration.</change>
+      <change>Added autoconf/automake build.</change>
+      <change>Auto detect all available codepages.</change>
+      <change>Print available codepages in usage.</change>
+      <change>Added genre encoding.</change>
+      <change>Fixup exit code.</change>
+    </changes>
+  </release>
+
+  <release stable="true">
+    <version>1.0.1</version>
+    <date>2006-07-05</date>
+    <file type="source">http://mp3unicode.yellowsite.ru/mp3unicode-1.0.1.tar.bz2</file>
+    <changes>
+      <change>Fixed an error in the Makefile (g++ invocation parameters).</change>
+    </changes>
+  </release>
+</releases>
