@@ -18,4 +18,5 @@
   </authors>
   <xi:include href="releases.xml"/>
   <manpage><xi:include href="manpage.xhtml" xpointer="/1/2"/></manpage>
+  <license><xi:include href="gpl-2.0.xhtml" xpointer="/1/2"/></license>
 </project>
