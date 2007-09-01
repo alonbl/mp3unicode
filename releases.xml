@@ -3,9 +3,8 @@
   <release>
     <version>1.2</version>
     <date>2007-??-??</date>
-    <file type="source">test.tar.gz</file>
-    <file type="ebuild">test.ebuild</file>
-    <file type="debian" arch="x86">test.deb</file>
+    <file type="source">http://downloads.sourceforge.net/mp3unicode/mp3unicode-1.2.tar.bz2</file>
+    <file type="ebuild">http://downloads.sourceforge.net/mp3unicode/mp3unicode-1.2.ebuild</file>
     <changes>
       <change>Drop Qt.</change>
     </changes>
@@ -21,7 +20,7 @@
     </changes>
   </release>
   
-  <release stable="true">
+  <release>
     <version>1.1.1</version>
     <date>2007-04-29</date>
     <file type="source">http://mp3unicode.yellowsite.ru/mp3unicode-1.1.1.tar.bz2</file>
@@ -31,7 +30,7 @@
     </changes>
   </release>
   
-  <release stable="true">
+  <release>
     <version>1.1.0</version>
     <date>2007-04-07</date>
     <file type="source">http://mp3unicode.yellowsite.ru/mp3unicode-1.1.0.tar.bz2</file>
@@ -45,7 +44,7 @@
     </changes>
   </release>
 
-  <release stable="true">
+  <release>
     <version>1.0.1</version>
     <date>2006-07-05</date>
     <file type="source">http://mp3unicode.yellowsite.ru/mp3unicode-1.0.1.tar.bz2</file>
