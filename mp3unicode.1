@@ -1,5 +1,6 @@
 .\"
 .\" Copyright (c) 2005-2007 Alon Bar-Lev <alon.barlev@gmail.com>
+.\" Copyright (c) 2007 Andrey Dubovik <andu@inbox.ru>
 .\" All rights reserved.
 .\"
 .\" This program is free software; you can redistribute it and/or modify
@@ -23,46 +24,50 @@
 .Nm mp3unicode
 .Nd Convert MP3 tags to Unicode
 .Sh SYNOPSIS
-.Nm gnupg-pkcs11-scd
-.Ar --source-encoding
-.Op --id3v1-encoding
-.Op --id3v2-encoding
-.Op --preserve-unicode
-.Op --version
-.Op --help
+.Nm mp3unicode
+.Op options
 .Ar file...
 .Sh DESCRIPTION
 .Nm mp3unicode
 MP3Unicode is a command line utility to convert ID3 tags in mp3 files between
 different encodings.
 .Pp
-In order to see vailable encodings execute:
+In order to see the available encodings execute:
 .Bd -literal -offset indent
-$ iconv --list
+.Nm iconv --list
 .Ed
-.Bl -tag -width "AA"
-.It --source-encoding Ar <encoding>
+.Pp
+.Sh OPTIONS
+.Bl -tag -width "AAAAA"
+.It -s, --source-encoding Ar <encoding>
 Read current mp3 tags assuming they are encoded with <encoding>.
 <encoding> is either "unicode" or any valid 8bit encoding.
-.It --id3v1-encoding Ar <encoding>
+.It -1, --id3v1-encoding Ar <encoding>
 Write id3v1 tag in <encoding>, if <encoding> is "none", then strip id3v1
 tag away. <encoding> may be any valid 8bit encoding, note however that it
 is not possible to write id3v1 in Unicode.
-.It --id3v2-encoding Ar <encoding>
+.It -2, --id3v2-encoding Ar <encoding>
 Write id3v2 tag in <encoding>, if <encoding> is "none", then strip id3v2
 tag away. <encoding> may be either "unicode" or any valid 8bit encoding.
-.It --preserve-unicode
+.It -p, --preserve-unicode
 If source encoding is specified to be some specific encoding and not Unicode,
 but the actual encoding seems to be Unicode, then assume it is Unicode. E.g.,
 if you want to process a lot of files, some of which are in Unicode (or have
-Unicode characters somewhere), but some are in , just issue -s CP1251 -p along
-with other options. This should work as you would like it to work.
+Unicode characters somewhere), but some are in cp1251, just issue -s cp1251 -p
+along with other options. This should work as you would like it to work.
+.It -v, --version
+Prints version number, compilation date and time.
 .El
+.Sh EXAMPLE
+.Nm mp3unicode --source-encoding cp1251 --id3v1-encoding none
+.Nm --id3v2-encoding unicode file.mp3
+
+will read id3v2 tag (or id3v1 tag if there is no id3v2) from the file, convert
+the text fields in the tag from cp1251 to Unicode and will write id3v2 tag
+back, stripping away id3v1 tag.
+.Pp
 .Sh SEE ALSO
 .Xr iconv 1p
-.Rs
-.%T "mp3unicode Home Page"
-.%O http://mp3unicode.yellowsite.ru
 .Re
 .Sh AUTHORS AND COPYRIGHT
 Copyright (c) 2006-2007 Alon Bar-Lev <alon.barlev@gmail.com>
