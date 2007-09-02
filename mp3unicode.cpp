@@ -222,7 +222,7 @@ int main (int argc, char *argv[]) {
 		static struct option long_options[] = {
 			{ "source-encoding", required_argument, NULL, 's' },
 			{ "id3v1-encoding", required_argument, NULL, '1' },
-			{ "id3v2-encoding", required_argument, NULL, '3' },
+			{ "id3v2-encoding", required_argument, NULL, '2' },
 			{ "preserve-unicode", no_argument, NULL, 'p' },
 			{ "version", no_argument, NULL, 'v' },
 			{ "help", no_argument, NULL, 'h' },
@@ -245,7 +245,7 @@ int main (int argc, char *argv[]) {
 				case '1':
 					id3v1_encoding = optarg;
 				break;
-				case '3':
+				case '2':
 					id3v2_encoding = optarg;
 				break;
 				case 'p':
@@ -291,7 +291,7 @@ int main (int argc, char *argv[]) {
 					" -v        --version                     Version information\n"
 					" -s        --source-encoding             Current encoding, required.\n"
 					" -1        --id3v1-encoding              Target encoding, can be 'none' or ANSI_Code_Page\n"
-					" -3        --id3v2-encoding              Target encoding, can be 'none', ANSI_Code_Page or 'unicode'\n"
+					" -2        --id3v2-encoding              Target encoding, can be 'none', ANSI_Code_Page or 'unicode'\n"
 					" -p        --preserve-unicode            Try not to reencode unicode.\n"
 					" file...\n"
 					"\n"
