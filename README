@@ -1,4 +1,4 @@
-MP3Unicode
+mp3unicode
 
 I. Introduction
 
@@ -7,39 +7,14 @@ different encodings. For example,
 
 mp3unicode --source-encoding CP1255 --id3v1-encoding none --id3v2-encoding unicode file.mp3
 
-Will read id3v2 tag (or id3v1 tag if there is no id3v2) from the file, convert
+will read id3v2 tag (or id3v1 tag if there is no id3v2) from the file, convert
 the text fields in the tag from  to Unicode and will write id3v2 tag back,
 stripping away id3v1 tag.
 
-Andrey wrote it for him-self, since he is now on Linux with utf8, but I have an old mp3
-player, which I like but it likes id3v1 tags in  :)
+II. Installation
 
-II. Usage
+See INSTALL
 
-mp3unicode [options] [filename]
+III. Usage
 
-Options:
-
--s, --source-encoding <encoding>
-	Read current mp3 tags assuming they are encoded with <encoding>.
-	<encoding> is either "unicode" or any valid 8bit encoding.
-
--1, --id3v1-encoding <encoding>
-	Write id3v1 tag in <encoding>, if <encoding> is "none", then strip id3v1
-	tag away. <encoding> may be any valid 8bit encoding, note however that it
-	is not possible to write id3v1 in Unicode.
-
--2, --id3v2-encoding <encoding>
-	Write id3v2 tag in <encoding>, if <encoding> is "none", then strip id3v2
-	tag away. <encoding> may be either "unicode" or any valid 8bit encoding.
-
--p, --preserve-unicode
-	If source encoding is specified to be some specific encoding and not Unicode,
-	but the actual encoding seems to be Unicode, then assume it is Unicode. E.g.,
-	if you want to process a lot of files, some of which are in Unicode (or have
-	Unicode characters somewhere), but some are in , just issue -s CP1251 -p along
-	with other options. This should work as you would like it to work.
-
--v, --version
-	Prints version number, compilation date and time.
-
+See mp3unicode.1
