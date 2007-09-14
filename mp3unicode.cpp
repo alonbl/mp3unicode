@@ -235,6 +235,11 @@ int main (int argc, char *argv[]) {
 		std::string id3v2_encoding = "none";
 		bool preserve_unicode = false;
 		bool usage_ok = true;
+		
+		if(argc == 1) {
+			printf(msg::usage);
+			exit(1);
+		}
 
 		while (
 			(long_options_ret = getopt_long (argc, argv, "", long_options, NULL)) != -1
@@ -257,20 +262,22 @@ int main (int argc, char *argv[]) {
 					printf(msg::copyright);
 					exit (1);
 				break;
-				default:
 				case 'h':
+					printf(msg::usage);
+					exit(1);
+				default:
 					usage_ok = false;
 				break;
 			}
 		}
 
-		if (source_encoding.empty ()) {
-			fprintf (stderr, msg::nosenc);
-			exit (1);
+		if (usage_ok && source_encoding.empty ()) {
+			printf (msg::nosenc);
+			usage_ok = false;
 		}
 
 		if (!usage_ok) {
-			printf(msg::usage);
+			printf(msg::seehelp);
 			exit (1);
 		}
 
