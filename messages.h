@@ -61,12 +61,14 @@ const char* enc_error = "Error during encoding.\n";
 
 const char* nosenc = "Please specify source encoding.\n";
 
+const char* seehelp = "For help, type mp3unicode --help.\n";
+
 std::string nofile(const std::string filename) {
 	return "Cannot open file: " + filename + ".";
 }
 
 std::string error(const std::string message) {
-	return "Error: " + message + "\n\n";
+	return "Error: " + message + "\n";
 }
 
 }
