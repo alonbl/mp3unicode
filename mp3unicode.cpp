@@ -1,6 +1,6 @@
 /*
 	Copyright (c) 2006-2007 Alon Bar-Lev <alon.barlev@gmail.com>
-	Copyright (C) 2006 Andrey Dubovik
+	Copyright (c) 2006-2007 Andrey Dubovik <andu@inbox.ru>
 	All rights reserved.
 
 	This program is free software; you can redistribute it and/or modify
@@ -18,6 +18,7 @@
 	59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
+#include "messages.h"
 #include "config.h"
 #include <stdio.h>
 #include <getopt.h>
@@ -71,12 +72,12 @@ public:
 			_src_enc = "UTF-8";
 		}
 		if ((m_cd_src = iconv_open ("UTF-8", _src_enc.c_str ())) == (iconv_t)-1) {
-			throw std::string("Cannot open source encoding.");
+			throw msg::wrong_senc;
 		}
 		
 		if(id3v1_enc != "none") {
 			if ((m_cd_id3v1 = iconv_open (id3v1_enc.c_str (), "UTF-8")) == (iconv_t)-1) {
-				throw std::string("Cannot open id3v1 encoding.");
+				throw msg::wrong_1enc;
 			}
 			m_id3v1 = true;	
 		}
@@ -87,7 +88,7 @@ public:
 			}
 
 			if ((m_cd_id3v2 = iconv_open (_id3v2_enc.c_str (), "UTF-8")) == (iconv_t)-1) {
-				throw std::string("Cannot open id3v2 encoding.");
+				throw msg::wrong_2enc;
 			}
 
 			m_id3v2 = true;
@@ -199,7 +200,7 @@ protected:
 				) == (size_t)-1 &&
 				errno != E2BIG
 			) {
-				throw std::string("Error during encoding.");
+				throw msg::enc_error;
 			}
 
 			dst.append (to_buffer, to);
@@ -208,7 +209,7 @@ protected:
 		to = to_buffer;
 		to_size = sizeof (to_buffer);
 		if (iconv (cd, NULL, NULL, &to, &to_size) == (size_t)-1) {
-			throw std::string("Error during encoding.");
+			throw msg::enc_error;
 		}
 
 		dst.append (to_buffer, to);
@@ -252,18 +253,8 @@ int main (int argc, char *argv[]) {
 					preserve_unicode = true;
 				break;
 				case 'v':
-					printf (
-						(
-							"%s %s\n"
-							"\n"
-							"Copyright (c) 2006-2007 Alon Bar-Lev <alon.barlev@gmail.com>\n"
-							"Copyright (C) 2006 Andrey Dubovik\n"
-							"This is free software; see the source for copying conditions.\n"
-							"There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n"
-						),
-						PACKAGE,
-						PACKAGE_VERSION
-					);
+					printf("%s %s\n", PACKAGE, PACKAGE_VERSION);
+					printf(msg::copyright);
 					exit (1);
 				break;
 				default:
@@ -274,33 +265,12 @@ int main (int argc, char *argv[]) {
 		}
 
 		if (source_encoding.empty ()) {
-			fprintf (
-				stderr,
-				"Please specify source encoding.\n"
-			);
+			fprintf (stderr, msg::nosenc);
 			exit (1);
 		}
 
 		if (!usage_ok) {
-			fprintf (
-				stderr,
-				(
-					"usage:\n"
-					"%s\n"
-					" -h        --help                        This help\n"
-					" -v        --version                     Version information\n"
-					" -s        --source-encoding             Current encoding, required.\n"
-					" -1        --id3v1-encoding              Target encoding, can be 'none' or ANSI_Code_Page\n"
-					" -2        --id3v2-encoding              Target encoding, can be 'none', ANSI_Code_Page or 'unicode'\n"
-					" -p        --preserve-unicode            Try not to reencode unicode.\n"
-					" file...\n"
-					"\n"
-					"To view available encodings, execute:\n"
-					"$ iconv --list\n"
-					"Specify 'unicode' and not specific unicode code page.\n"
-					"\n"
-				)
-			);
+			printf(msg::usage);
 			exit (1);
 		}
 
@@ -310,7 +280,7 @@ int main (int argc, char *argv[]) {
 			TagLib::MPEG::File mp3file(argv[i]);
 
 			if (!mp3file.isOpen ()) {
-				throw std::string ("Cannot open file: ").append (argv[i]).append (".");
+				throw msg::nofile(argv[i]);
 			}
 
 			TagLib::Tag *tag = mp3file.tag();
@@ -336,7 +306,7 @@ int main (int argc, char *argv[]) {
 		exit (0);
 	}
 	catch (const std::string &e) {
-		printf ("Error: %s\n", e.c_str ());
+		printf (msg::error(e).c_str());
 		exit (1);
 	}
 
