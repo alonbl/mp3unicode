@@ -71,6 +71,10 @@ std::string nofile(const std::string filename) {
 	return "Cannot open file: " + filename + ".";
 }
 
+std::string emptyfile(const std::string filename) {
+	return "" + filename + " does not contain any ID3 tags, skipping.";
+}
+
 std::string error(const std::string message) {
 	return "Error: " + message + "\n";
 }
