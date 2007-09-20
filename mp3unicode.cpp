@@ -236,6 +236,7 @@ int main (int argc, char *argv[]) {
 			{ "preserve-unicode", no_argument, NULL, 'p' },
 			{ "version", no_argument, NULL, 'v' },
 			{ "help", no_argument, NULL, 'h' },
+   			{ "quiet", no_argument, NULL, 'q' },
 			{ NULL, 0, NULL, 0 }
 		};
 		int long_options_ret;
@@ -244,6 +245,7 @@ int main (int argc, char *argv[]) {
 		std::string id3v2_encoding = "none";
 		bool preserve_unicode = false;
 		bool usage_ok = true;
+		bool verbose = true;
 		
 		if(argc == 1) {
 			printf(msg::usage);
@@ -251,7 +253,7 @@ int main (int argc, char *argv[]) {
 		}
 
 		while (
-			(long_options_ret = getopt_long (argc, argv, "s:1:2:pvh", long_options, NULL)) != -1
+			(long_options_ret = getopt_long (argc, argv, "s:1:2:pvhq", long_options, NULL)) != -1
 		) {
 			switch (long_options_ret) {
 				case 's':
@@ -277,6 +279,9 @@ int main (int argc, char *argv[]) {
 				case 'h':
 					printf(msg::usage);
 					exit(1);
+				case 'q':
+					verbose = false;
+				break;
 				default:
 					usage_ok = false;
 				break;
@@ -330,6 +335,9 @@ int main (int argc, char *argv[]) {
 				
 				mp3file.strip(~converter.Tags());		
 				mp3file.save (converter.Tags ());
+				if(verbose) {
+					std::cout << msg::filedone(argv[i]) << std::endl;
+				}
 			}
 		}
 

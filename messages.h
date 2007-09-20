@@ -44,6 +44,7 @@ Options:\n\
   -1, --id3v1-encoding         Target encoding, can be 'none' or an ANSI code page\n\
   -2, --id3v2-encoding         Target encoding, can be 'none', an ANSI code page or 'unicode'\n\
   -p, --preserve-unicode       Try not to reencode unicode.\n\
+  -q, --quiet                  Do not report what files have been processed.\n\
 \n\
 To view available ANSI code pages, execute:\n\
   iconv --list\n\
@@ -72,7 +73,11 @@ std::string nofile(const std::string filename) {
 }
 
 std::string emptyfile(const std::string filename) {
-	return "" + filename + " does not contain any ID3 tags, skipping.";
+	return filename + " does not contain any ID3 tags, skipping.";
+}
+
+std::string filedone(const std::string filename) {
+	return filename + "...done";
 }
 
 std::string error(const std::string message) {
