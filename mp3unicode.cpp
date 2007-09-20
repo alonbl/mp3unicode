@@ -323,6 +323,10 @@ int main (int argc, char *argv[]) {
 			converter.Convert (tag->album (), &TagLib::Tag::setAlbum);
 			converter.Convert (tag->comment (), &TagLib::Tag::setComment);
 			converter.Convert (tag->genre (), &TagLib::Tag::setGenre);
+			
+			mp3file.strip(
+				id3v1_encoding == "none" ? TagLib::MPEG::File::ID3v1 : 0 |
+				id3v2_encoding == "none" ? TagLib::MPEG::File::ID3v2 : 0 );
 
 			mp3file.save (converter.Tags ());
 		}
