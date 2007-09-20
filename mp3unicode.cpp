@@ -321,6 +321,10 @@ int main (int argc, char *argv[]) {
 		printf (msg::error(e).c_str());
 		exit (1);
 	}
+	catch (const char *e) {
+		printf (msg::error(e).c_str());
+		exit (1);
+	}
 
 	return 1;
 }
