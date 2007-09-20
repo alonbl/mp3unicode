@@ -65,6 +65,8 @@ const char* seehelp = "For help, type mp3unicode --help.\n";
 
 const char* nofiles = "No files are given.\n";
 
+const char* v1unicode = "ID3v1 does not support unicode.\n";
+
 std::string nofile(const std::string filename) {
 	return "Cannot open file: " + filename + ".";
 }

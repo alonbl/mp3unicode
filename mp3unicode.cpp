@@ -80,6 +80,10 @@ public:
 			throw msg::wrong_senc;
 		}
 		
+		if(id3v1_enc == "unicode") {
+			throw msg::v1unicode;
+		}
+		
 		if(id3v1_enc != "none") {
 			if ((m_cd_id3v1 = iconv_open (id3v1_enc.c_str (), "UTF-8")) == (iconv_t)-1) {
 				throw msg::wrong_1enc;
