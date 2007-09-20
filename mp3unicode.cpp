@@ -242,7 +242,7 @@ int main (int argc, char *argv[]) {
 		}
 
 		while (
-			(long_options_ret = getopt_long (argc, argv, "", long_options, NULL)) != -1
+			(long_options_ret = getopt_long (argc, argv, "s:1:2:pvh", long_options, NULL)) != -1
 		) {
 			switch (long_options_ret) {
 				case 's':
