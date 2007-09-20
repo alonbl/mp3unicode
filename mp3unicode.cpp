@@ -306,26 +306,31 @@ int main (int argc, char *argv[]) {
 			if (!mp3file.isOpen ()) {
 				throw msg::nofile(argv[i]);
 			}
-
-			TagLib::Tag *tag = mp3file.tag();
-
-			Converter converter (
-				source_encoding,
-				id3v1_encoding,
-				id3v2_encoding,
-				mp3file.ID3v1Tag (true),
-				mp3file.ID3v2Tag (true),
-				preserve_unicode
-			);
-
-			converter.Convert (tag->title (), &TagLib::Tag::setTitle);
-			converter.Convert (tag->artist (), &TagLib::Tag::setArtist);
-			converter.Convert (tag->album (), &TagLib::Tag::setAlbum);
-			converter.Convert (tag->comment (), &TagLib::Tag::setComment);
-			converter.Convert (tag->genre (), &TagLib::Tag::setGenre);
 			
-			mp3file.strip(~converter.Tags());			
-			mp3file.save (converter.Tags ());
+			TagLib::Tag *tag = mp3file.tag();
+			
+			if(tag->isEmpty()) {
+				std::cout << msg::emptyfile(argv[i]) << std::endl;
+			}
+			else {
+				Converter converter (
+					source_encoding,
+					id3v1_encoding,
+					id3v2_encoding,
+					mp3file.ID3v1Tag (true),
+					mp3file.ID3v2Tag (true),
+					preserve_unicode
+				);
+	
+				converter.Convert (tag->title (), &TagLib::Tag::setTitle);
+				converter.Convert (tag->artist (), &TagLib::Tag::setArtist);
+				converter.Convert (tag->album (), &TagLib::Tag::setAlbum);
+				converter.Convert (tag->comment (), &TagLib::Tag::setComment);
+				converter.Convert (tag->genre (), &TagLib::Tag::setGenre);
+				
+				mp3file.strip(~converter.Tags());		
+				mp3file.save (converter.Tags ());
+			}
 		}
 
 		exit (0);
