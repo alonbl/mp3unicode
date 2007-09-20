@@ -29,6 +29,11 @@
 #include <id3v2tag.h>
 #include <iconv.h>
 #include <errno.h>
+#include <cctype>
+
+void tolower(std::string& s) {
+	std::transform(s.begin(), s.end(), s.begin(), (int(*)(int))std::tolower);
+}
 
 class Converter {
 
@@ -247,12 +252,15 @@ int main (int argc, char *argv[]) {
 			switch (long_options_ret) {
 				case 's':
 					source_encoding = optarg;
+					tolower(source_encoding);
 				break;
 				case '1':
 					id3v1_encoding = optarg;
+					tolower(id3v1_encoding);
 				break;
 				case '2':
 					id3v2_encoding = optarg;
+					tolower(id3v1_encoding);
 				break;
 				case 'p':
 					preserve_unicode = true;
