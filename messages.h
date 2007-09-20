@@ -63,6 +63,8 @@ const char* nosenc = "Please specify source encoding.\n";
 
 const char* seehelp = "For help, type mp3unicode --help.\n";
 
+const char* nofiles = "No files given.\n";
+
 std::string nofile(const std::string filename) {
 	return "Cannot open file: " + filename + ".";
 }
