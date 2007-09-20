@@ -275,6 +275,11 @@ int main (int argc, char *argv[]) {
 			printf (msg::nosenc);
 			usage_ok = false;
 		}
+		
+		if(optind == argc) {
+			printf(msg::nofiles);
+			usage_ok = false;
+		}
 
 		if (!usage_ok) {
 			printf(msg::seehelp);
