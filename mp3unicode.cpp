@@ -18,7 +18,6 @@
 	59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#include "messages.h"
 #include "config.h"
 #include <stdio.h>
 #include <getopt.h>
@@ -30,6 +29,8 @@
 #include <iconv.h>
 #include <errno.h>
 #include <cctype>
+
+#include "messages.h"
 
 void tolower(std::string& s) {
 	std::transform(s.begin(), s.end(), s.begin(), (int(*)(int))std::tolower);
