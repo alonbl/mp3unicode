@@ -21,6 +21,13 @@
 # INSTALL targets:
 AUTOMAKE_OPTIONS=foreign dist-bzip2
 
+BUILT_SOURCES=ChangeLog
+DISTCLEANFILES=ChangeLog
+EXTRA_DIST=ChangeLog ChangeLog.xsl releases.xml
+
+ChangeLog:	ChangeLog.xsl releases.xml
+	$(XSLTPROC) -o ChangeLog ChangeLog.xsl releases.xml
+
 dist_doc_DATA=README COPYING
 
 SUBDIRS= \
@@ -45,7 +52,7 @@ mp3unicode.1.html:
 
 nodist_html_DATA=mp3unicode.1.html
 
-EXTRA_DIST=mp3unicode.1
+EXTRA_DIST+=mp3unicode.1
 
 else
 dist_man_MANS=mp3unicode.1

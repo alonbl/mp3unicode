@@ -61,6 +61,7 @@ AC_PROG_CXX
 AC_PROG_INSTALL
 PKG_PROG_PKG_CONFIG
 AC_CHECK_PROGS([M4], [m4])
+AC_CHECK_PROGS([XSLTPROC], [xsltproc]) # Required only for svn package
 
 if test "${WIN32}" = "yes"; then
 	AC_CHECK_PROGS([MAN2HTML], [man2html])
@@ -78,12 +79,10 @@ PKG_CHECK_MODULES([TAGLIB], [taglib >= 1.4],, [AC_MSG_ERROR([Cannot locate tagli
 CPPFLAGS="${CPPFLAGS} ${TAGLIB_CFLAGS}"
 LIBS="${LIBS} ${TAGLIB_LIBS}"
 
+AC_ARG_VAR([ICONV_CFLAGS], [C compiler flags for iconv])
+AC_ARG_VAR([ICONV_LIBS], [linker flags for iconv])
 CPPFLAGS="${CPPFLAGS} ${ICONV_CFLAGS}"
 LIBS="${LIBS} ${ICONV_LIBS}"
-
-if test "$enable_pedantic" = "yes"; then
-	CPPFLAGS="${CPPFLAGS} -ansi -pedantic -D__STRICT_ANSI__ -D_POSIX_SOURCE -D_POSIX_C_SOURCE -D_SVID_SOURCE"
-fi
 
 AM_CONDITIONAL([WIN32], [test "${WIN32}" = "yes"])
 AC_CONFIG_FILES([
