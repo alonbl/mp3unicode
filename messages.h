@@ -25,32 +25,32 @@
 
 namespace msg {
 
-const char* copyright = "\
-Copyright (c) 2006-2007 Alon Bar-Lev <alon.barlev@gmail.com>\n\
-Copyright (c) 2006-2007 Andrey Dubovik <http://www.yellowsite.ru>\n\
-\n\
-This is free software; see the source for copying conditions.\n\
-There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n";
+const char* copyright = (
+	"Copyright (c) 2006-2007 Alon Bar-Lev <alon.barlev@gmail.com>\n"
+	"Copyright (c) 2006-2007 Andrey Dubovik <http://www.yellowsite.ru>\n"
+	"\n"
+	"This is free software; see the source for copying conditions.\n"
+	"There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n"
+);
 
-
-const char* usage = "\
-Usage:\n\
-  mp3unicode [options] file1 file2 ...\n\
-\n\
-Options:\n\
-  -h, --help                   This help\n\
-  -v, --version                Version information\n\
-  -s, --source-encoding        Current encoding, required\n\
-  -1, --id3v1-encoding         Target encoding, can be 'none' or an ANSI code page\n\
-  -2, --id3v2-encoding         Target encoding, can be 'none', an ANSI code page or 'unicode'\n\
-  -p, --preserve-unicode       Try not to reencode unicode.\n\
-  -q, --quiet                  Do not report what files have been processed.\n\
-\n\
-To view available ANSI code pages, execute:\n\
-  iconv --list\n\
-\n\
-Important: use 'unicode' instead of utf-8 or utf-16\n\n";
-
+const char* usage = (
+	"Usage:\n"
+	"  mp3unicode [options] file1 file2 ...\n"
+	"\n"
+	"Options:\n"
+	"  -h, --help                   This help\n"
+	"  -v, --version                Version information\n"
+	"  -s, --source-encoding        Current encoding, required\n"
+	"  -1, --id3v1-encoding         Target encoding, can be 'none' or an ANSI code page\n"
+	"  -2, --id3v2-encoding         Target encoding, can be 'none', an ANSI code page or 'unicode'\n"
+	"  -p, --preserve-unicode       Try not to reencode unicode.\n"
+	"  -q, --quiet                  Do not report what files have been processed.\n"
+	"\n"
+	"To view available ANSI code pages, execute:\n"
+	"  iconv --list\n"
+	"\n"
+	"Important: use 'unicode' instead of utf-8 or utf-16\n\n"
+);
 
 const char* wrong_senc = "Cannot open source encoding.\n";
 
