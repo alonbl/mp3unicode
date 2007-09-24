@@ -316,7 +316,7 @@ int main (int argc, char *argv[]) {
 			TagLib::Tag *tag = mp3file.tag();
 			
 			if(tag->isEmpty()) {
-				std::cout << msg::emptyfile(argv[i]) << std::endl;
+				printf(msg::emptyfile(argv[i]).c_str());
 			}
 			else {
 				Converter converter (
@@ -337,7 +337,7 @@ int main (int argc, char *argv[]) {
 				mp3file.strip(~converter.Tags());		
 				mp3file.save (converter.Tags ());
 				if(verbose) {
-					std::cout << msg::filedone(argv[i]) << std::endl;
+					printf(msg::filedone(argv[i]).c_str());
 				}
 			}
 		}
