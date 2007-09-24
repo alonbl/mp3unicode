@@ -73,11 +73,11 @@ std::string nofile(const std::string filename) {
 }
 
 std::string emptyfile(const std::string filename) {
-	return filename + " does not contain any ID3 tags, skipping.";
+	return filename + " does not contain any ID3 tags, skipping.\n";
 }
 
 std::string filedone(const std::string filename) {
-	return filename + "...done";
+	return filename + "...done\n";
 }
 
 std::string error(const std::string message) {
