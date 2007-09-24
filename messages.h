@@ -24,66 +24,21 @@
 #include <string>
 
 namespace msg {
-
-const char* copyright = (
-	"Copyright (c) 2006-2007 Alon Bar-Lev <alon.barlev@gmail.com>\n"
-	"Copyright (c) 2006-2007 Andrey Dubovik <http://www.yellowsite.ru>\n"
-	"\n"
-	"This is free software; see the source for copying conditions.\n"
-	"There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n"
-);
-
-const char* usage = (
-	"Usage:\n"
-	"  mp3unicode [options] file1 file2 ...\n"
-	"\n"
-	"Options:\n"
-	"  -h, --help                   This help\n"
-	"  -v, --version                Version information\n"
-	"  -s, --source-encoding        Current encoding, required\n"
-	"  -1, --id3v1-encoding         Target encoding, can be 'none' or an ANSI code page\n"
-	"  -2, --id3v2-encoding         Target encoding, can be 'none', an ANSI code page or 'unicode'\n"
-	"  -p, --preserve-unicode       Try not to reencode unicode.\n"
-	"  -q, --quiet                  Do not report what files have been processed.\n"
-	"\n"
-	"To view available ANSI code pages, execute:\n"
-	"  iconv --list\n"
-	"\n"
-	"Important: use 'unicode' instead of utf-8 or utf-16\n\n"
-);
-
-const char* wrong_senc = "Cannot open source encoding.\n";
-
-const char* wrong_1enc = "Cannot open id3v1 encoding.\n";
-
-const char* wrong_2enc = "Cannot open id3v2 encoding.\n";
-
-const char* enc_error = "Error during encoding.\n";
-
-const char* nosenc = "Please specify source encoding.\n";
-
-const char* seehelp = "For help, type mp3unicode --help.\n";
-
-const char* nofiles = "No files are given.\n";
-
-const char* v1unicode = "ID3v1 does not support unicode.\n";
-
-std::string nofile(const std::string filename) {
-	return "Cannot open file: " + filename + ".";
-}
-
-std::string emptyfile(const std::string filename) {
-	return filename + " does not contain any ID3 tags, skipping.\n";
-}
-
-std::string filedone(const std::string filename) {
-	return filename + "...done\n";
-}
-
-std::string error(const std::string message) {
-	return "Error: " + message + "\n";
-}
-
+	extern const char* copyright;
+	extern const char* usage;
+	extern const char* wrong_senc;
+	extern const char* wrong_1enc;
+	extern const char* wrong_2enc;
+	extern const char* enc_error;
+	extern const char* nosenc;
+	extern const char* seehelp;
+	extern const char* nofiles;
+	extern const char* v1unicode;
+	
+	std::string nofile(const std::string filename);
+	std::string emptyfile(const std::string filename);
+	std::string filedone(const std::string filename);
+	std::string error(const std::string message);
 }
 
 #endif

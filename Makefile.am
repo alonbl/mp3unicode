@@ -37,7 +37,7 @@ bin_PROGRAMS= \
 	mp3unicode
 
 mp3unicode_SOURCES= \
-	mp3unicode.cpp messages.h
+	mp3unicode.cpp messages.cpp messages.h
 
 dist-hook:
 	ln -s distro/rpm/mp3unicode.spec $(distdir)/mp3unicode.spec
