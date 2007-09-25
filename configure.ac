@@ -18,7 +18,7 @@
 #
 
 AC_PREREQ([2.60])
-AC_INIT([mp3unicode], [1.2_beta1])
+AC_INIT([mp3unicode], [1.2])
 AM_INIT_AUTOMAKE([${PACKAGE_NAME}], [${PACKAGE_VERSION}])
 AM_CONFIG_HEADER([config.h])
 AC_CONFIG_SRCDIR([mp3unicode.cpp])
