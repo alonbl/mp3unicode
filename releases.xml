@@ -9,13 +9,14 @@
       <change>Qt dependency dropped.</change>
       <change>Processing multiple files is now possible.</change>
       <change>Some improvements in interface, e.g. running mp3unicode
-  without arguments shows help.</change>
+   without arguments shows help.</change>
     </changes>
   </release>
   
   <release>
     <version>1.1.2</version>
     <date>2007-06-30</date>
+    <file type="source">http://downloads.sourceforge.net/mp3unicode/mp3unicode-1.1.2.tar.bz2</file>
     <changes>
       <change>Use qmake to build.</change>
       <change>Fix some compiler warnings.</change>

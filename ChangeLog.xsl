@@ -16,7 +16,7 @@
 </xsl:template>
 
 <xsl:template match="change">
-* <xsl:value-of select="."/>
+ * <xsl:value-of select="."/>
 </xsl:template>
 
 <xsl:template match="text()"/>
