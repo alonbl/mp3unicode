@@ -2,7 +2,7 @@
 <releases>
   <release>
     <version>1.2</version>
-    <date>2007-09-25</date>
+    <date>2007-09-28</date>
     <file type="source">http://downloads.sourceforge.net/mp3unicode/mp3unicode-1.2.tar.bz2</file>
     <file type="ebuild">http://packages.gentoo.org/packages/?category=media-sound;name=mp3unicode</file>
     <changes>
