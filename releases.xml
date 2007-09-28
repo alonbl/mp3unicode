@@ -4,11 +4,11 @@
     <version>1.2</version>
     <date>2007-09-25</date>
     <file type="source">http://downloads.sourceforge.net/mp3unicode/mp3unicode-1.2.tar.bz2</file>
-	<file type="ebuild">http://packages.gentoo.org/packages/?category=media-sound;name=mp3unicode</file>
+    <file type="ebuild">http://packages.gentoo.org/packages/?category=media-sound;name=mp3unicode</file>
     <changes>
       <change>Qt dependency dropped.</change>
-	  <change>Processing multiple files is now possible.</change>
-	  <change>Some improvements in interface, e.g. running mp3unicode without arguments shows help.</change>
+      <change>Processing multiple files is now possible.</change>
+      <change>Some improvements in interface, e.g. running mp3unicode without arguments shows help.</change>
     </changes>
   </release>
   
@@ -25,7 +25,7 @@
   <release>
     <version>1.1.1</version>
     <date>2007-04-29</date>
-    <file type="source">http://mp3unicode.yellowsite.ru/mp3unicode-1.1.1.tar.bz2</file>
+    <file type="source">http://downloads.sourceforge.net/mp3unicode/mp3unicode-1.1.1.tar.bz2</file>
     <changes>
       <change>Qt-4.2 prerequisite and not 4.2.2.</change>
       <change>UTF-8 filenames are now supported.</change>
@@ -35,7 +35,7 @@
   <release>
     <version>1.1.0</version>
     <date>2007-04-07</date>
-    <file type="source">http://mp3unicode.yellowsite.ru/mp3unicode-1.1.0.tar.bz2</file>
+    <file type="source">http://downloads.sourceforge.net/mp3unicode/mp3unicode-1.1.0.tar.bz2</file>
     <changes>
       <change>Qt-4.2 migration.</change>
       <change>Added autoconf/automake build.</change>
@@ -49,9 +49,10 @@
   <release>
     <version>1.0.1</version>
     <date>2006-07-05</date>
-    <file type="source">http://mp3unicode.yellowsite.ru/mp3unicode-1.0.1.tar.bz2</file>
+    <file type="source">http://downloads.sourceforge.net/mp3unicode/mp3unicode-1.0.1.tar.bz2</file>
     <changes>
       <change>Fixed an error in the Makefile (g++ invocation parameters).</change>
     </changes>
   </release>
 </releases>
+
