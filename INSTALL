@@ -22,7 +22,7 @@ Cross-MinGW32
 		w32root=/tmp/w32root
 
 		./configure \
-			--host=mingw32
+			--host=mingw32 \
 			PKG_CONFIG=true \
 			TAGLIB_CFLAGS="-I${w32root}/include/taglib" \
 			TAGLIB_LIBS="-L${w32root}/lib -ltag" \
