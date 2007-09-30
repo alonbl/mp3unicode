@@ -28,7 +28,7 @@
   <xsl:text>*</xsl:text>
   <xsl:call-template name="wrapper">
     <xsl:with-param name="offset" select="1"/>
-    <xsl:with-param name="width" select="0"/>
+    <xsl:with-param name="width" select="1"/>
   </xsl:call-template>
 </xsl:template>
 
