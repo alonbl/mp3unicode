@@ -84,6 +84,34 @@ AC_ARG_VAR([ICONV_LIBS], [linker flags for iconv])
 CPPFLAGS="${CPPFLAGS} ${ICONV_CFLAGS}"
 LIBS="${LIBS} ${ICONV_LIBS}"
 
+AC_MSG_CHECKING([iconv can handle const])
+OLD_CPPFLAGS="${CPPFLAGS}"
+test "${GCC}" = "yes" && CPPFLAGS="${CPPFLAGS} -Werror"
+AC_COMPILE_IFELSE(
+	[AC_LANG_PROGRAM(
+		[[
+#include <iconv.h>
+#include <stdlib.h>
+		]],
+		[[
+const char *test1 = NULL;
+iconv (
+	(iconv_t)0,
+	&test1,
+	NULL,
+	NULL,
+	NULL
+);
+		]]
+	)],
+	[AC_MSG_RESULT([yes])],
+	[
+		AC_MSG_RESULT([no])
+		AC_DEFINE([HAVE_OLD_ICONV], [1], [Iconv does not support const])
+	]
+)
+CPPFLAGS="${OLD_CPPFLAGS}"
+
 AM_CONDITIONAL([WIN32], [test "${WIN32}" = "yes"])
 AC_CONFIG_FILES([
 	Makefile
