@@ -200,7 +200,7 @@ protected:
 			if (
 				iconv (
 					cd,
-#if !defined(_LIBICONV_VERSION) || _LIBICONV_VERSION < 0x010B
+#ifdef HAVE_OLD_ICONV
 					(char **)
 #endif
 					&from,
