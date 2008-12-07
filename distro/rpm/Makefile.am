@@ -17,4 +17,5 @@
 # 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 
+MAINTAINERCLEANFILES = $(srcdir)/Makefile.in
 EXTRA_DIST=mp3unicode.spec
