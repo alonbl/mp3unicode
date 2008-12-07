@@ -41,6 +41,7 @@ const char* usage = (
 	"  -1, --id3v1-encoding         Target encoding, can be 'none' or an ANSI code page\n"
 	"  -2, --id3v2-encoding         Target encoding, can be 'none', an ANSI code page or 'unicode'\n"
 	"  -p, --preserve-unicode       Try not to reencode unicode.\n"
+	"  -w, --preview                Do not modify the files, just show converted tags.\n"
 	"  -q, --quiet                  Do not report what files have been processed.\n"
 	"\n"
 	"To view available ANSI code pages, execute:\n"
