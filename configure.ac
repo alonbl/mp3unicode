@@ -18,7 +18,7 @@
 #
 
 AC_PREREQ([2.60])
-AC_INIT([mp3unicode], [1.2])
+AC_INIT([mp3unicode], [1.3-svn])
 AM_INIT_AUTOMAKE([${PACKAGE_NAME}], [${PACKAGE_VERSION}])
 AM_CONFIG_HEADER([config.h])
 AC_CONFIG_SRCDIR([mp3unicode.cpp])
@@ -35,7 +35,7 @@ AC_ARG_WITH(
 test -z "${WIN32}" && WIN32="no"
 test -z "${CYGWIN}" && CYGWIN="no"
 case "${host}" in
-	*-mingw32*)
+	*-mingw*)
 		WIN32="yes"
 	;;
 	*-winnt*)
@@ -58,15 +58,26 @@ esac
 
 AC_PROG_CC
 AC_PROG_CXX
+AC_PROG_LN_S
 AC_PROG_INSTALL
 PKG_PROG_PKG_CONFIG
+AC_ARG_VAR([M4], [m4 utility])
 AC_CHECK_PROGS([M4], [m4])
+AC_ARG_VAR([XSLTPROC], [xsltproc utility])
 AC_CHECK_PROGS([XSLTPROC], [xsltproc]) # Required only for svn package
 
+AC_ARG_VAR([MAN2HTML], [tr utility])
+AC_CHECK_PROGS([MAN2HTML], [man2html])
 if test "${WIN32}" = "yes"; then
-	AC_CHECK_PROGS([MAN2HTML], [man2html])
 	test -z "${MAN2HTML}" && AC_MSG_ERROR([man2html is required for win32])
 fi
+
+AC_ARG_ENABLE(
+	[strict],
+	[AS_HELP_STRING([--enable-strict],[enable strict compile mode @<:@disabled@:>@])],
+	,
+	[enable_strict="no"]
+)
 
 AC_ARG_ENABLE(
 	[pedantic],
@@ -111,6 +122,14 @@ iconv (
 	]
 )
 CPPFLAGS="${OLD_CPPFLAGS}"
+
+if test "${enable_pedantic}" = "yes"; then
+	enable_strict="yes";
+	CXXFLAGS="${CXXFLAGS} -pedantic"
+fi
+if test "${enable_strict}" = "yes"; then
+	CXXFLAGS="${CXXFLAGS} -Wall -Wextra"
+fi
 
 AM_CONDITIONAL([WIN32], [test "${WIN32}" = "yes"])
 AC_CONFIG_FILES([

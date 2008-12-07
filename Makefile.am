@@ -21,12 +21,21 @@
 # INSTALL targets:
 AUTOMAKE_OPTIONS=foreign dist-bzip2
 
+MAINTAINERCLEANFILES = \
+	config.log config.status \
+	$(srcdir)/Makefile.in \
+	$(srcdir)/config.h.in $(srcdir)/config.h.in~ $(srcdir)/configure \
+	$(srcdir)/install-sh $(srcdir)/ltmain.sh $(srcdir)/missing \
+	$(srcdir)/depcomp $(srcdir)/aclocal.m4 \
+	$(srcdir)/config.guess $(srcdir)/config.sub \
+	$(srcdir)/mp3unicode.spec
+
 BUILT_SOURCES=ChangeLog
 DISTCLEANFILES=ChangeLog
 EXTRA_DIST=ChangeLog ChangeLog.xsl releases.xml
 
 ChangeLog:	ChangeLog.xsl releases.xml
-	$(XSLTPROC) -o ChangeLog ChangeLog.xsl releases.xml
+	$(XSLTPROC) -o ChangeLog "$(srcdir)/ChangeLog.xsl" "$(srcdir)/releases.xml"
 
 dist_doc_DATA=README COPYING
 
@@ -40,20 +49,17 @@ mp3unicode_SOURCES= \
 	mp3unicode.cpp messages.cpp messages.h
 
 dist-hook:
-	ln -s distro/rpm/mp3unicode.spec $(distdir)/mp3unicode.spec
+	$(LN_S) "$(srcdir)/distro/rpm/mp3unicode.spec" "$(distdir)/mp3unicode.spec"
 
 clean-generic:
-	-rm pkcs11-helper.spec
 	-rm -f *.html
 
 if WIN32
+nodist_html_DATA=mp3unicode.html
+dist_noinst_DATA=mp3unicode.1
+
 mp3unicode.1.html:
-	$(MAN2HTML) < mp3unicode.1 > $@
-
-nodist_html_DATA=mp3unicode.1.html
-
-EXTRA_DIST+=mp3unicode.1
-
+	$(MAN2HTML) < "$(srcdir)/mp3unicode.1" > $@
 else
 dist_man_MANS=mp3unicode.1
 endif

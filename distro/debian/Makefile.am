@@ -17,6 +17,10 @@
 # 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 
+SUFFIXES=.m4
+MAINTAINERCLEANFILES = $(srcdir)/Makefile.in
+CLEANFILES=copyright
+
 BUILT_SOURCES=copyright
 
 EXTRA_DIST= \
@@ -30,8 +34,5 @@ EXTRA_DIST= \
 	watch \
 	mp3unicode.install
 
-copyright:	copyright.m4
-	$(M4) $< > $@
-
-clean-local:
-	-rm copyright
+.m4:
+	$(M4) -Dtop_srcdir="$(top_srcdir)" "$^" > "$@"
