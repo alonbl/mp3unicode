@@ -267,7 +267,7 @@ int main (int argc, char *argv[]) {
 				break;
 				case '2':
 					id3v2_encoding = optarg;
-					tolower(id3v1_encoding);
+					tolower(id3v2_encoding);
 				break;
 				case 'p':
 					preserve_unicode = true;
