@@ -57,6 +57,9 @@ but the actual encoding seems to be Unicode, then assume it is Unicode. E.g.,
 if you want to process a lot of files, some of which are in Unicode (or have
 Unicode characters somewhere), but some are in cp1251, just issue -s cp1251 -p
 along with other options. This should work as you would like it to work.
+.It -w, --preview
+Do not modify the files, instead show the tags that would be written. Useful to
+test specified options for correctness.
 .It -v, --version
 Prints version number, compilation date and time.
 .It -q, --quiet
