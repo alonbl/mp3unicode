@@ -158,6 +158,35 @@ public:
 		}
 	}
 
+	void
+	printTags (
+		const std::string &file
+	) {
+		printf("%s\n", file.c_str());
+		printf("\tid3v1:\n");
+		if (m_id3v1) {
+			printf("\t\tTitle:\t\t%s\n", m_id3v1_tag->title ().to8Bit().c_str());
+			printf("\t\tArtist:\t\t%s\n", m_id3v1_tag->artist ().to8Bit().c_str());
+			printf("\t\tAlbum:\t\t%s\n", m_id3v1_tag->album ().to8Bit().c_str());
+			printf("\t\tComment:\t%s\n", m_id3v1_tag->comment ().to8Bit().c_str());
+			printf("\t\tGenre:\t\t%s\n", m_id3v1_tag->genre ().to8Bit().c_str());
+		}
+		else {
+			printf("\t\tempty.\n");
+		}
+		printf("\tid3v2:\n");
+		if (m_id3v2) {
+			printf("\t\tTitle:\t\t%s\n", m_id3v2_tag->title ().to8Bit(m_id3v2_utf8).c_str());
+			printf("\t\tArtist:\t\t%s\n", m_id3v2_tag->artist ().to8Bit(m_id3v2_utf8).c_str());
+			printf("\t\tAlbum:\t\t%s\n", m_id3v2_tag->album ().to8Bit(m_id3v2_utf8).c_str());
+			printf("\t\tComment:\t%s\n", m_id3v2_tag->comment ().to8Bit(m_id3v2_utf8).c_str());
+			printf("\t\tGenre:\t\t%s\n", m_id3v2_tag->genre ().to8Bit(m_id3v2_utf8).c_str());
+		}
+		else {
+			printf("\t\tempty.\n");
+		}
+	}
+
 protected:
 
 	bool
@@ -235,6 +264,7 @@ int main (int argc, char *argv[]) {
 			{ "id3v1-encoding", required_argument, NULL, '1' },
 			{ "id3v2-encoding", required_argument, NULL, '2' },
 			{ "preserve-unicode", no_argument, NULL, 'p' },
+			{ "preview", no_argument, NULL, 'w' },
 			{ "version", no_argument, NULL, 'v' },
 			{ "help", no_argument, NULL, 'h' },
    			{ "quiet", no_argument, NULL, 'q' },
@@ -245,6 +275,7 @@ int main (int argc, char *argv[]) {
 		std::string id3v1_encoding = "none";
 		std::string id3v2_encoding = "none";
 		bool preserve_unicode = false;
+		bool preview = false;
 		bool usage_ok = true;
 		bool verbose = true;
 		
@@ -254,7 +285,7 @@ int main (int argc, char *argv[]) {
 		}
 
 		while (
-			(long_options_ret = getopt_long (argc, argv, "s:1:2:pvhq", long_options, NULL)) != -1
+			(long_options_ret = getopt_long (argc, argv, "s:1:2:wdvhq", long_options, NULL)) != -1
 		) {
 			switch (long_options_ret) {
 				case 's':
@@ -271,6 +302,9 @@ int main (int argc, char *argv[]) {
 				break;
 				case 'p':
 					preserve_unicode = true;
+				break;
+				case 'w':
+					preview = true;
 				break;
 				case 'v':
 					printf("%s %s\n", PACKAGE, PACKAGE_VERSION);
@@ -334,10 +368,15 @@ int main (int argc, char *argv[]) {
 				converter.Convert (tag->comment (), &TagLib::Tag::setComment);
 				converter.Convert (tag->genre (), &TagLib::Tag::setGenre);
 				
-				mp3file.strip(~converter.Tags());		
-				mp3file.save (converter.Tags ());
-				if(verbose) {
-					printf(msg::filedone(argv[i]).c_str());
+				if (preview) {
+					converter.printTags(argv[i]);
+				}
+				else {
+					mp3file.strip(~converter.Tags());		
+					mp3file.save (converter.Tags ());
+					if(verbose) {
+						printf(msg::filedone(argv[i]).c_str());
+					}
 				}
 			}
 		}
