@@ -280,7 +280,7 @@ int main (int argc, char *argv[]) {
 		bool verbose = true;
 		
 		if(argc == 1) {
-			printf(msg::usage);
+			printf("%s", msg::usage);
 			exit(1);
 		}
 
@@ -308,11 +308,11 @@ int main (int argc, char *argv[]) {
 				break;
 				case 'v':
 					printf("%s %s\n", PACKAGE, PACKAGE_VERSION);
-					printf(msg::copyright);
+					printf("%s", msg::copyright);
 					exit (1);
 				break;
 				case 'h':
-					printf(msg::usage);
+					printf("%s", msg::usage);
 					exit(1);
 				case 'q':
 					verbose = false;
@@ -324,17 +324,17 @@ int main (int argc, char *argv[]) {
 		}
 
 		if (usage_ok && source_encoding.empty ()) {
-			printf (msg::nosenc);
+			printf("%s", msg::nosenc);
 			usage_ok = false;
 		}
 		
 		if(optind == argc) {
-			printf(msg::nofiles);
+			printf("%s", msg::nofiles);
 			usage_ok = false;
 		}
 
 		if (!usage_ok) {
-			printf(msg::seehelp);
+			printf("%s", msg::seehelp);
 			exit (1);
 		}
 
@@ -350,7 +350,7 @@ int main (int argc, char *argv[]) {
 			TagLib::Tag *tag = mp3file.tag();
 			
 			if(tag->isEmpty()) {
-				printf(msg::emptyfile(argv[i]).c_str());
+				printf("%s", msg::emptyfile(argv[i]).c_str());
 			}
 			else {
 				Converter converter (
@@ -375,7 +375,7 @@ int main (int argc, char *argv[]) {
 					mp3file.strip(~converter.Tags());		
 					mp3file.save (converter.Tags ());
 					if(verbose) {
-						printf(msg::filedone(argv[i]).c_str());
+						printf("%s", msg::filedone(argv[i]).c_str());
 					}
 				}
 			}
@@ -384,11 +384,11 @@ int main (int argc, char *argv[]) {
 		exit (0);
 	}
 	catch (const std::string &e) {
-		printf (msg::error(e).c_str());
+		printf ("%s", msg::error(e).c_str());
 		exit (1);
 	}
 	catch (const char *e) {
-		printf (msg::error(e).c_str());
+		printf ("%s", msg::error(e).c_str());
 		exit (1);
 	}
 
