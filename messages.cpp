@@ -1,6 +1,6 @@
 /*
-	Copyright (c) 2006-2007 Alon Bar-Lev <alon.barlev@gmail.com>
-	Copyright (c) 2006-2007 Andrey Dubovik <andu@inbox.ru>
+	Copyright (c) 2005-2012 Alon Bar-Lev <alon.barlev@gmail.com>
+	Copyright (c) 2005-2012 Andrey Dubovik <andu@inbox.ru>
 	All rights reserved.
 
 	This program is free software; you can redistribute it and/or modify
@@ -23,8 +23,8 @@
 namespace msg {
 
 const char* copyright = (
-	"Copyright (c) 2006-2007 Alon Bar-Lev <alon.barlev@gmail.com>\n"
-	"Copyright (c) 2006-2007 Andrey Dubovik <http://www.yellowsite.ru>\n"
+	"Copyright (c) 2005-2012 Alon Bar-Lev <alon.barlev@gmail.com>\n"
+	"Copyright (c) 2005-2012 Andrey Dubovik <http://www.yellowsite.ru>\n"
 	"\n"
 	"This is free software; see the source for copying conditions.\n"
 	"There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n"

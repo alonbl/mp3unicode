@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2005-2006 Alon Bar-Lev <alon.barlev@gmail.com>
+# Copyright (c) 2005-2012 Alon Bar-Lev <alon.barlev@gmail.com>
 # All rights reserved.
 #
 # This program is free software; you can redistribute it and/or modify

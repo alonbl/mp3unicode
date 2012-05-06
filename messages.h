@@ -1,6 +1,6 @@
 /*
-	Copyright (c) 2006-2007 Alon Bar-Lev <alon.barlev@gmail.com>
-	Copyright (c) 2006-2007 Andrey Dubovik <andu@inbox.ru>
+	Copyright (c) 2005-2012 Alon Bar-Lev <alon.barlev@gmail.com>
+	Copyright (c) 2005-2012 Andrey Dubovik <andu@inbox.ru>
 	All rights reserved.
 
 	This program is free software; you can redistribute it and/or modify
