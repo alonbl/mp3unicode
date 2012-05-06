@@ -74,6 +74,10 @@ std::string emptyfile(const std::string filename) {
 	return filename + " does not contain any ID3 tags, skipping.\n";
 }
 
+std::string writefail(const std::string filename) {
+	return filename + "failed!\n";
+}
+
 std::string filedone(const std::string filename) {
 	return filename + "...done\n";
 }

@@ -37,6 +37,7 @@ namespace msg {
 	
 	std::string nofile(const std::string filename);
 	std::string emptyfile(const std::string filename);
+	std::string writefail(const std::string filename);
 	std::string filedone(const std::string filename);
 	std::string error(const std::string message);
 }

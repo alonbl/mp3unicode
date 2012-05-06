@@ -373,8 +373,10 @@ int main (int argc, char *argv[]) {
 				}
 				else {
 					mp3file.strip(~converter.Tags());		
-					mp3file.save (converter.Tags ());
-					if(verbose) {
+					if (!mp3file.save (converter.Tags ())) {
+						printf("%s", msg::writefail(argv[i]).c_str());
+					}
+					else if(verbose) {
 						printf("%s", msg::filedone(argv[i]).c_str());
 					}
 				}
