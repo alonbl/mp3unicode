@@ -229,10 +229,7 @@ protected:
 			if (
 				iconv (
 					cd,
-#ifdef HAVE_OLD_ICONV
-					(char **)
-#endif
-					&from,
+					(char **)&from,
 					&from_size,
 					&to,
 					&to_size
