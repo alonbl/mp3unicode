@@ -3,7 +3,7 @@
   <release>
     <version>1.2.1</version>
     <date>2012-05-06</date>
-    <file type="source">https://github.com/downloads/alonbl/mp3unicode/mp3unicode-1.2.1.tar.bz2</file>
+    <file type="source">https://github.com/alonbl/mp3unicode/releases/tag/mp3unicode-1.2.1</file>
     <file type="ebuild">http://packages.gentoo.org/package/media-sound/mp3unicode</file>
     <changes>
       <change>Fix -p parameter.</change>
