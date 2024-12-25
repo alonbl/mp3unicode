@@ -192,7 +192,7 @@ protected:
 	bool
 	heuristicIsUnicode (TagLib::String string) {
 		unsigned u0080 = 0;
-		for(TagLib::uint i = 0; i < string.size(); i++) {
+		for(unsigned int i = 0; i < string.size(); i++) {
 			if(string[i] > 255) {
 				return true;
 			}
